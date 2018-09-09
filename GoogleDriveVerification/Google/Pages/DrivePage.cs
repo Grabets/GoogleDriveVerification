@@ -31,6 +31,14 @@ namespace GoogleDriveVerification.Google.Pages
             return new DrivePage();
         }
 
+        public void LogOut()
+        {
+            profileButton.Click();
+            By logOutButtonLocator = By.Id("gb_71");
+            MyWait(logOutButtonLocator).Click();
+
+        }
+
         public void UploadDocument()
         {
             createButton.Click();
@@ -99,14 +107,6 @@ namespace GoogleDriveVerification.Google.Pages
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
             return wait.Until(d => d.FindElement(locator));
-        }
-
-        public void LogOut()
-        {
-            profileButton.Click();
-            By logOutButtonLocator = By.Id("gb_71");
-            MyWait(logOutButtonLocator).Click();
-            
         }
 
     }

@@ -9,8 +9,9 @@ namespace GoogleDriveVerification.Google.Tests
    
     public class MainTest
     {
-        private const String HOME_PAGE_URL = "https://www.google.com.ua/";
+        private const String START_PAGE_URL = "https://www.google.com.ua/";
         IWebDriver driver;
+        StartPage startPage;
         HomePage homePage;
         DrivePage drivePage;
 
@@ -22,8 +23,8 @@ namespace GoogleDriveVerification.Google.Tests
             chromeOptions.AddArguments("--incognito");
             driver = new ChromeDriver(chromeOptions);
             driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(HOME_PAGE_URL);
-            homePage = HomePage.Init(driver);
+            driver.Navigate().GoToUrl(START_PAGE_URL);
+            startPage = StartPage.Init(driver);
         }
 
         [OneTimeTearDown]
@@ -37,7 +38,6 @@ namespace GoogleDriveVerification.Google.Tests
         public void SimpleTest()
         {
             LoginWithDefaultUser();
-
             drivePage = homePage.openDrivePage();
             drivePage.UploadDocument();
             String fileName = "testfile.txt";
@@ -56,12 +56,12 @@ namespace GoogleDriveVerification.Google.Tests
 
         private void LoginWithDefaultUser()
         {
-            LoginNamePage loginPage = homePage.loginButtonClick();
+            LoginNamePage loginPage = startPage.loginButtonClick();
             string emailAddress = "SeleniumWebDriverAutoTest";
             loginPage.LoginInput = emailAddress;
             LoginPasswordPage loginPasswordPage = loginPage.LoginNextClick();
             loginPasswordPage.PasswordInput = "zxcvbnm,./123";
-            loginPasswordPage.LoginPasswordNextClick();
+            homePage = loginPasswordPage.LoginPasswordNextClick();
         }
 
     }

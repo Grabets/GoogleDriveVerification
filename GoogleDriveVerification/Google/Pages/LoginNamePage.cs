@@ -39,10 +39,15 @@ namespace GoogleDriveVerification.Google.Pages
         {
             loginIdentifierNextButton.Click();
             LoginPasswordPage loginPasswordPage = LoginPasswordPage.Init(driver);
+            AddCookiesToSuccesLogin();
+            return loginPasswordPage;
+        }
+
+        private void AddCookiesToSuccesLogin()
+        {
             driver.Manage().Cookies.AddCookie(new Cookie("GAPS", "1:lLKSHRt4ZRWTZc3gxtYNvNoCBP5HgmjpZJWZJc4w4uWTOFOwrU6ODCaECUVHHhE0okPFaDPFxdDhyTaJHhGVF_Nu4DLO5Q:nwvkk-qts6umTo9U"));
             driver.Manage().Cookies.AddCookie(new Cookie("LSID", "s.NL|s.UA|s.youtube:VwZWOLKme-aGdT7iPOIxIMumV76yXClj47z7oFJXcSuGhGs6whTe1W6hRz2SwIhvmQV5WQ."));
             driver.Manage().Cookies.AddCookie(new Cookie("ACCOUNT_CHOOSER", "AFx_qI6ZyDE9576mv7SJsZNIfgjOFMvWFITx2tQdU6F-8j-3fYZaQUZ4vwsUFHOTt4jc_6VB6lavT0p92cVjUwd113TJZ3UuwQ8ru2IVBukLlzMbYKeXf8yo2Ns8KqJq6A0A0bqUscSC2H84DBVG1bbAr0cI5QjXGQ"));
-            return loginPasswordPage;
         }
 
 

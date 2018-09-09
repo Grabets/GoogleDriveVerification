@@ -17,7 +17,6 @@ namespace GoogleDriveVerification.Google.Pages
 
 
         private static IWebDriver driver;
-        private static IWebElement loginButton;
         private static IWebElement popUpButton;
 
 
@@ -30,26 +29,11 @@ namespace GoogleDriveVerification.Google.Pages
         {
             driver = driverArg;
             Thread.Sleep(2000);
-            try
-            {
-                loginButton = driver.FindElement(By.Id(LOGIN_BUTTON_LOCATOR_ID));
-            }
-            catch (NoSuchElementException e)
-            {
-                //TODO: make two page: StartPage and HomePage
-                Console.WriteLine(e.Message);
-            }
-            popUpButton = driver.FindElement(By.XPath(POP_UP_BUTTON_LOCATOR));
+            By popUpButtonLocator = By.XPath(POP_UP_BUTTON_LOCATOR);
+            popUpButton = driver.FindElement(popUpButtonLocator);
             return new HomePage();
         }
 
-
-        public LoginNamePage loginButtonClick()
-        {
-            loginButton.Click();
-            LoginNamePage loginNamePage = LoginNamePage.Init(driver);
-            return loginNamePage;
-        }
 
         public DrivePage openDrivePage()
         {
@@ -62,10 +46,10 @@ namespace GoogleDriveVerification.Google.Pages
 
         }
 
-        private void MyWait(By locator)
+        private static IWebElement MyWait(By locator)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-            wait.Until(d => d.FindElement(locator));
+            return wait.Until(d => d.FindElement(locator));
         }
 
     }

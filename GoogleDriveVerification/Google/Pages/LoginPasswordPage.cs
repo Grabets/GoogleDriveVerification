@@ -27,10 +27,8 @@ namespace GoogleDriveVerification.Google.Pages
         public static LoginPasswordPage Init(IWebDriver driverArg)
         {
             driver = driverArg;
-            Thread.Sleep(5000);
-            /*WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementToBeClickable(driver.FindElement(By.XPath(LOGIN_PASSWORD_LOCATOR))));*/
-            loginPasswordElement = driver.FindElement(By.XPath(LOGIN_PASSWORD_LOCATOR));
+            By passwordLocator = By.XPath(LOGIN_PASSWORD_LOCATOR);
+            loginPasswordElement = MyWait(passwordLocator);
             loginPasswordNextButton = driver.FindElement(By.Id(LOGIN_BUTTON_LOCATOR_ID));
             return new LoginPasswordPage();
         }
@@ -46,8 +44,15 @@ namespace GoogleDriveVerification.Google.Pages
         public HomePage LoginPasswordNextClick()
         {
             loginPasswordNextButton.Click();
+            
             HomePage homePage = HomePage.Init(driver);
             return homePage;
+        }
+
+        private static IWebElement MyWait(By locator)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            return wait.Until(d => d.FindElement(locator));
         }
 
     }
