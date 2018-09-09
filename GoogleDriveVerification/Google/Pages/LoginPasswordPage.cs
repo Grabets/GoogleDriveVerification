@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using GoogleDriveVerification.Google.Pages.Core;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -24,35 +25,26 @@ namespace GoogleDriveVerification.Google.Pages
         {
         }
 
-        public static LoginPasswordPage Init(IWebDriver driverArg)
+        public static LoginPasswordPage Create(IWebDriver driverArg)
         {
             driver = driverArg;
             By passwordLocator = By.XPath(LOGIN_PASSWORD_LOCATOR);
-            loginPasswordElement = MyWait(passwordLocator);
+            loginPasswordElement = WaitForElement.Wait(driver, passwordLocator);
             loginPasswordNextButton = driver.FindElement(By.Id(LOGIN_BUTTON_LOCATOR_ID));
             return new LoginPasswordPage();
         }
 
-        public String PasswordInput
+        public void setPassword(String password)
         {
-            set
-            {
-                loginPasswordElement.SendKeys("" + value);
-            }
+            loginPasswordElement.SendKeys("" + password);
         }
 
-        public HomePage LoginPasswordNextClick()
+        public HomePage SubmitPassword()
         {
             loginPasswordNextButton.Click();
             
-            HomePage homePage = HomePage.Init(driver);
+            HomePage homePage = HomePage.Create(driver);
             return homePage;
-        }
-
-        private static IWebElement MyWait(By locator)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-            return wait.Until(d => d.FindElement(locator));
         }
 
     }

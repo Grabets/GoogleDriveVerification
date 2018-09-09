@@ -19,7 +19,7 @@ namespace GoogleDriveVerification.Google.Pages
         {
         }
 
-        public static LoginNamePage Init(IWebDriver driverArg)
+        public static LoginNamePage Create(IWebDriver driverArg)
         {
             driver = driverArg;
             loginInputElement = driver.FindElement(By.Id(LOGIN_INPUT_LOCATOR_ID));
@@ -27,22 +27,20 @@ namespace GoogleDriveVerification.Google.Pages
             return new LoginNamePage();
         }
 
-        public String LoginInput
+        public void setEmailAddress(String email)
         {
-            set
-            {
-                loginInputElement.SendKeys(""+value);
-            }
+            loginInputElement.SendKeys("" + email);
         }
 
-        public LoginPasswordPage LoginNextClick()
+        public LoginPasswordPage ProceedToPassword()
         {
             loginIdentifierNextButton.Click();
-            LoginPasswordPage loginPasswordPage = LoginPasswordPage.Init(driver);
+            LoginPasswordPage loginPasswordPage = LoginPasswordPage.Create(driver);
             AddCookiesToSuccesLogin();
             return loginPasswordPage;
         }
 
+        //this method is needed to avoid robot checking
         private void AddCookiesToSuccesLogin()
         {
             driver.Manage().Cookies.AddCookie(new Cookie("GAPS", "1:lLKSHRt4ZRWTZc3gxtYNvNoCBP5HgmjpZJWZJc4w4uWTOFOwrU6ODCaECUVHHhE0okPFaDPFxdDhyTaJHhGVF_Nu4DLO5Q:nwvkk-qts6umTo9U"));

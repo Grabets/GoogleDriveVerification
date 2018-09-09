@@ -7,9 +7,14 @@ using System;
 namespace GoogleDriveVerification.Google.Tests
 {
    
-    public class MainTest
+    public class DocumentOperationTest
     {
         private const String START_PAGE_URL = "https://www.google.com.ua/";
+        private const String FILE_NAME = "testfile.txt";
+        private const String EMAIL_ADDRESS = "SeleniumWebDriverAutoTest";
+        private const String PASSWORD = "zxcvbnm,./123";
+
+
         IWebDriver driver;
         StartPage startPage;
         HomePage homePage;
@@ -24,7 +29,7 @@ namespace GoogleDriveVerification.Google.Tests
             driver = new ChromeDriver(chromeOptions);
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(START_PAGE_URL);
-            startPage = StartPage.Init(driver);
+            startPage = StartPage.Create(driver);
         }
 
         [OneTimeTearDown]
@@ -35,20 +40,21 @@ namespace GoogleDriveVerification.Google.Tests
         }
 
         [Test]
-        public void SimpleTest()
+        public void MainTest()
         {
             LoginWithDefaultUser();
-            drivePage = homePage.openDrivePage();
-            drivePage.UploadDocument();
-            String fileName = "testfile.txt";
-            bool isFilePresent = drivePage.CheckFilePresence(fileName);
+
+            drivePage = homePage.OpenDrivePage();
+            drivePage.UploadDocument("testfile.txt");
+            
+            bool isFilePresent = drivePage.CheckFilePresence(FILE_NAME);
             if (!isFilePresent)
             {
                 Assert.Fail("The file wasn’t uploaded");
             }
             else
             {
-                drivePage.DeleteDocument(fileName);
+                drivePage.DeleteDocument(FILE_NAME);
             }
 
 
@@ -56,12 +62,12 @@ namespace GoogleDriveVerification.Google.Tests
 
         private void LoginWithDefaultUser()
         {
-            LoginNamePage loginPage = startPage.loginButtonClick();
-            string emailAddress = "SeleniumWebDriverAutoTest";
-            loginPage.LoginInput = emailAddress;
-            LoginPasswordPage loginPasswordPage = loginPage.LoginNextClick();
-            loginPasswordPage.PasswordInput = "zxcvbnm,./123";
-            homePage = loginPasswordPage.LoginPasswordNextClick();
+            LoginNamePage loginNamePage = startPage.loginButtonClick();
+            loginNamePage.setEmailAddress(EMAIL_ADDRESS);
+
+            LoginPasswordPage loginPasswordPage = loginNamePage.ProceedToPassword();
+            loginPasswordPage.setPassword(PASSWORD);
+            homePage = loginPasswordPage.SubmitPassword();
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using GoogleDriveVerification.Google.Pages.Core;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,11 @@ namespace GoogleDriveVerification.Google.Pages
 
         }
 
-        public static StartPage Init(IWebDriver driverArg)
+        public static StartPage Create(IWebDriver driverArg)
         {
             driver = driverArg;
             By loginButtonLocator = By.Id(LOGIN_BUTTON_LOCATOR_ID);
-            loginButton = MyWait(loginButtonLocator);
+            loginButton = WaitForElement.Wait(driver, loginButtonLocator);
             return new StartPage();
         }
 
@@ -32,16 +33,9 @@ namespace GoogleDriveVerification.Google.Pages
         public LoginNamePage loginButtonClick()
         {
             loginButton.Click();
-            LoginNamePage loginNamePage = LoginNamePage.Init(driver);
+            LoginNamePage loginNamePage = LoginNamePage.Create(driver);
             return loginNamePage;
         }
-
-        private static IWebElement MyWait(By locator)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-            return wait.Until(d => d.FindElement(locator));
-        }
-
 
     }
 }

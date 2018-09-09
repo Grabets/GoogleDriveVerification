@@ -73,12 +73,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Google\Pages\Core\WaitForElement.cs" />
     <Compile Include="Google\Pages\DrivePage.cs" />
     <Compile Include="Google\Pages\HomePage.cs" />
     <Compile Include="Google\Pages\LoginNamePage.cs" />
     <Compile Include="Google\Pages\LoginPasswordPage.cs" />
     <Compile Include="Google\Pages\StartPage.cs" />
-    <Compile Include="Google\Tests\MainTest.cs" />
+    <Compile Include="Google\Tests\DocumentOperationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

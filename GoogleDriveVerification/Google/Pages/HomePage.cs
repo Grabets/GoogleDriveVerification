@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using GoogleDriveVerification.Google.Pages.Core;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace GoogleDriveVerification.Google.Pages
 {
     class HomePage
     {
-        private const String LOGIN_BUTTON_LOCATOR_ID = "gb_70";
         private const String POP_UP_BUTTON_LOCATOR = "//a[@class='gb_b gb_ec']";
         private const String DRIVE_BUTTON_ID_LOCATOR = "ogbkddg:7";
 
@@ -25,7 +25,7 @@ namespace GoogleDriveVerification.Google.Pages
 
         }
 
-        public static HomePage Init(IWebDriver driverArg)
+        public static HomePage Create(IWebDriver driverArg)
         {
             driver = driverArg;
             Thread.Sleep(2000);
@@ -35,22 +35,21 @@ namespace GoogleDriveVerification.Google.Pages
         }
 
 
-        public DrivePage openDrivePage()
+        public DrivePage OpenDrivePage()
         {
-            popUpButton.Click();
+            while (popUpButton.GetAttribute("aria-expanded").Equals("false"))
+            {
+                popUpButton.Click();
+            }
+            
             By driveButtonLocator = By.Id(DRIVE_BUTTON_ID_LOCATOR);
-            MyWait(driveButtonLocator);
-            driver.FindElement(driveButtonLocator).Click();
-            DrivePage drivePage = DrivePage.Init(driver);
+            IWebElement openDriverPage = WaitForElement.Wait(driver, driveButtonLocator);
+            openDriverPage.Click();
+            DrivePage drivePage = DrivePage.Create(driver);
             return drivePage;
 
         }
 
-        private static IWebElement MyWait(By locator)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-            return wait.Until(d => d.FindElement(locator));
-        }
 
     }
 }
