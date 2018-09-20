@@ -12,7 +12,7 @@ namespace GoogleDriveVerification.Google.Pages
 {
     class HomePage
     {
-        private const String POP_UP_BUTTON_LOCATOR = "//a[@class='gb_b gb_ec']";
+        private const String POP_UP_BUTTON_LOCATOR = "//a[@class='gb_b gb_fc']";
         private const String DRIVE_BUTTON_ID_LOCATOR = "ogbkddg:7";
 
 

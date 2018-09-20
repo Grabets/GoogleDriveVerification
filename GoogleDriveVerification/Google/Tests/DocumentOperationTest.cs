@@ -14,7 +14,6 @@ namespace GoogleDriveVerification.Google.Tests
         private const String EMAIL_ADDRESS = "SeleniumWebDriverAutoTest";
         private const String PASSWORD = "zxcvbnm,./123";
 
-
         IWebDriver driver;
         StartPage startPage;
         HomePage homePage;
@@ -22,12 +21,9 @@ namespace GoogleDriveVerification.Google.Tests
 
 
         [OneTimeSetUp]
-        public void Init()
+        public void InitStartPage()
         {
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.AddArguments("--incognito");
-            driver = new ChromeDriver(chromeOptions);
-            driver.Manage().Window.Maximize();
+            driver = CreateIncognitoGoogleChromeWebDriver.Create();
             driver.Navigate().GoToUrl(START_PAGE_URL);
             startPage = StartPage.Create(driver);
         }
