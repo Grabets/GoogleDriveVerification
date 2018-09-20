@@ -12,7 +12,7 @@ namespace GoogleDriveVerification.Google.Pages
 {
     class HomePage
     {
-        private const String POP_UP_BUTTON_LOCATOR = "//a[@class='gb_b gb_fc']";
+        private const String POP_UP_BUTTON_ID_LOCATOR = "gbwa";
         private const String DRIVE_BUTTON_ID_LOCATOR = "ogbkddg:7";
 
 
@@ -29,8 +29,8 @@ namespace GoogleDriveVerification.Google.Pages
         {
             driver = driverArg;
             Thread.Sleep(2000);
-            By popUpButtonLocator = By.XPath(POP_UP_BUTTON_LOCATOR);
-            popUpButton = driver.FindElement(popUpButtonLocator);
+            By popUpButtonIdLocator = By.Id(POP_UP_BUTTON_ID_LOCATOR);
+            popUpButton = driver.FindElement(popUpButtonIdLocator);
             return new HomePage();
         }
 
@@ -49,7 +49,6 @@ namespace GoogleDriveVerification.Google.Pages
             return drivePage;
 
         }
-
 
     }
 }
